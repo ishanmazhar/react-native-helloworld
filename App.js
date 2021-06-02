@@ -1,10 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import ListItem from './components/ListItem/ListItem'; 
 
 export default function App() {
   const [inputValue, setInputValue] = useState(""); 
-  const [placeList, setPlaceList] = useState(""); 
+  const [placeList, setPlaceList] = useState([]); 
+
+  const list = placeList.map((item, index) => {
+    return (
+      <ListItem placeName={item} key={index} />
+    )
+  })
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
@@ -28,16 +35,12 @@ export default function App() {
           }}
         />
       </View>
-      {/* <Text>Hello World!</Text>
-      <Text>Hello World!</Text>
-      <Text>Hello World!</Text> */}
-      {/* <Text>My First React Native App</Text>
-      <TextInput 
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        placeholder="I am a placeholder"
-        onChangeText={text => handleInputChange(text)}
-      />
-      <StatusBar style="auto" /> */}
+      <View style={{
+        width: "100%"
+      }}>
+        {list}
+      </View>
+      {/* <StatusBar style="auto" />  */}
     </View>
   );
 }
