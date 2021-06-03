@@ -7,6 +7,11 @@ export default function App() {
   const [inputValue, setInputValue] = useState(""); 
   const [placeList, setPlaceList] = useState([]); 
 
+  const list = placeList.map((item, index) => {
+    return (
+      <ListItem placeName={item} key={index} onItemPressed={() => alert(item)} />
+    )
+  })
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
@@ -25,20 +30,17 @@ export default function App() {
           title="Add"
           onPress={() => {
             if(inputValue !== "") {
-              setPlaceList([...placeList, {key:Math.random().toString() , value:inputValue}]);
+              setPlaceList([...placeList, inputValue]);
             }
           }}
         />
       </View>
-      <FlatList style={{
+      <ScrollView style={{
         width: "100%"
-      }}
-      data={placeList}
-      renderItem={info => {
-        return (
-          <ListItem placeName={info.item.value} onItemPressed={() => alert(item)} />
-        )
-      }} />
+      }}>
+        {list}
+      </ScrollView>
+      {/* <StatusBar style="auto" />  */}
     </View>
   );
 }
