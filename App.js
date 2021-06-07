@@ -1,51 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import ListItem from './components/ListItem/ListItem'; 
-import InputPlace from './components/InputPlace/InputPlace';
-import PlaceList from './components/PlaceList/PlaceList'; 
-import PlaceDetail from './components/PlaceDetail/PlaceDetail'; 
+import 'react-native-gesture-handler';
+import React from 'react';
+import MainComponent from './src/MainComponent';
+import { Provider } from 'react-redux';
+import Store from './src/redux/store';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from './src/components/Login/Login';
+import navigationTab from './src/components/navigationTab/navigationTab';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [inputValue, setInputValue] = useState(""); 
-  const [placeList, setPlaceList] = useState([]); 
-  const [selectedPlace, setSelectedPlace] = useState(null);
-
-  const handleSelectedPlace = key => {
-    const place = placeList.find(place => {
-      return place.key === key;
-    })
-    setSelectedPlace(place); 
-  }
-  let placeDetail = null;
-  if(selectedPlace !== null) {
-    placeDetail = <PlaceDetail place={selectedPlace} /> 
-  }
-
   return (
-    <View style={styles.container}>
-      {placeDetail} 
-      <InputPlace
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        placeList={placeList}
-        setPlaceList={setPlaceList} />
-      <PlaceList placeList={placeList} handleSelectedPlace={handleSelectedPlace} />
-    </View>
+    <NavigationContainer>
+      <Provider store={Store}>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={navigationTab} />
+        </Stack.Navigator>
+      </Provider>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    // justifyContent: 'center',
-    // justifyContent: 'space-between',
-    justifyContent: 'flex-start',
-    flexDirection: 'column'
-    // flexDirection: 'column-reverse'
-    // flexDirection: 'row'
 
-  },
-});

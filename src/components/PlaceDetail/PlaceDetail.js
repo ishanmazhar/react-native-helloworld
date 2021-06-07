@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Modal, Image, Text, Button } from 'react-native';
+import { View, Modal, Image, Text, Button, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PlaceDetail = props => {
     return (
-        <Modal style={{width:"100%"}}>
+        <Modal>
             <View>
                 <Image source={props.place.image} style={{
                     width: "100%",
@@ -13,14 +14,20 @@ const PlaceDetail = props => {
                     textAlign: "center",
                     fontSize: 40
                 }}>{props.place.value}</Text>
-                <View>
-                    <Button title="Delete" color="red"
+                <View style={{ alignItems: "center" }}>
+                    <TouchableOpacity
                         onPress={
                             () => {
                                 props.handleDeleteItem(props.place.key);
                             }
-                        } />
-                    <Button title="Close" onPress={() => props.handleHideModal()} />
+                        }>
+                        <Icon name="trash" size={60} color="red" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => props.handleHideModal()}
+                    >
+                        <Icon name="times-circle" size={60} />
+                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>
