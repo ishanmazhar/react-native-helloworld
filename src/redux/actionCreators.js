@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 export const addPlace = place => dispatch => {
-    fetch("https://my-places-4bd08-default-rtdb.firebaseio.com/places.json", {
+    fetch("https://my-places-63af6.firebaseio.com/places.json", {
         method: "POST",
         body: JSON.stringify(place)
     })
@@ -18,7 +18,7 @@ export const setPlaces = places => {
 }
 
 export const loadPlaces = () => dispatch => {
-    fetch("https://my-places-4bd08-default-rtdb.firebaseio.com/places.json")
+    fetch("https://my-places-63af6.firebaseio.com/places.json")
         .catch(err => {
             alert("Something went wrong, sorry");
             console.log(err);
@@ -42,4 +42,27 @@ export const deletePlace = key => {
         type: actionTypes.DELETE_PLACE,
         payload: key
     }
+}
+
+export const trySignUp = (email, password) => dispatch => {
+    fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAwK6UUiyCsXSlNZElyx12XhQf6_jccNAY", {
+        method: "POST",
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .catch(err => {
+            console.log(err);
+            alert("Authentication Failed!");
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
+
 }

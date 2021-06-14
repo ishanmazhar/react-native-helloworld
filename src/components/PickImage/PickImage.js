@@ -14,7 +14,6 @@ const PickImage = props => {
             });
             if (!result.cancelled) {
                 props.setImage(`data:image/jpg;base64,${result.base64}`);
-                console.log(result.base64); 
             }
         }
         catch (E) {
